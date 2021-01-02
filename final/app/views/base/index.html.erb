@@ -1,0 +1,56 @@
+<%= javascript_pack_tag 'logics', 'data-turbolinks-track': 'reload' %>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">Перевод идиом</h1>
+</div>
+<main class="container">
+  <div class="shadow p-5 mb-5 bg-white rounded">
+    <%= form_tag do %>
+      <div class="row">
+        <div class="col-lg-6 col-md-6">
+          <div class="container">
+            <button class="btn btn-primary mb-2" type="button" name="language_from" data="ru" onclick="changeLanguage(this)">Русский</button>
+            <button class="btn btn-outline-primary mb-2" type="button" name="language_from" data="en" onclick="changeLanguage(this)">Английский</button>
+            <%= text_area_tag :idiom_from, nil, class: "form-control p-4", placeholder: "Введите что-нибудь...", required: true, autofocus: true, onchange: "sendIdioms()" %>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+          <div class="container">
+            <button class="btn btn-outline-primary mb-2" type="button" name="language_to" data="ru" onclick="changeLanguage(this)">Русский</button>
+            <button class="btn btn-primary mb-2" type="button" name="language_to" data="en" onclick="changeLanguage(this)">Английский</button>
+            <%= text_area_tag :idiom_to, nil, class: "form-control p-4", placeholder: "Перевод", readonly: true, style: "background-color: white; color: black;" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="alert alert-success" style="top: 20px; margin: 0;" id="result" hidden>
+    </div>
+  </div>
+</main>
+
+<div style="text-align: center;">
+  <a href="/show_saved" class="btn">
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-book" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" 
+        d="M1 2.828v9.923c.918-.35 2.107-.692 3.287-.81 1.094-.111 2.278-.039 3.213.492V2.687c-.654-.689-1.782-.886-3.112-.752-1.234.124-2.503.523-3.388.893zm7.5-.141v9.746c.935-.53 2.12-.603 3.213-.493 1.18.12 2.37.461 3.287.811V2.828c-.885-.37-2.154-.769-3.388-.893-1.33-.134-2.458.063-3.112.752zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+    </svg>
+    Сохраненные идиомы
+  </a>
+  <a class="btn" onclick="saveIdioms()">
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-bookmark-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" 
+        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+      <path fill-rule="evenodd" 
+        d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+    </svg>
+    Сохранить
+  </a>
+  <a class="btn" onclick="clearResult()">
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+      <path fill-rule="evenodd" 
+        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+    </svg>
+    Очистить поля
+  </a>
+</div>

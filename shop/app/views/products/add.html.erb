@@ -1,0 +1,21 @@
+<%= form_tag("/new", :method => "post") do %>
+    <table>
+    <caption><h1>Добавление товара</h1></caption>
+        <tr>
+            <td>Введите название</td>
+            <td><%= text_field_tag :name %></td>
+        </tr>
+        <tr>
+            <td>Введите цену</td>
+            <td><%= text_field_tag :price %></td>
+        </tr>
+        <tr>
+            <td>Введите описание</td>
+            <td><%= text_area_tag :main %></td>
+        </tr>
+        <tr>
+            <td><%= submit_tag "Добавить" %></td>
+            <td><span style="color: red;"><%= @error %></span></td>
+        </tr>
+    </table>
+<% end %>

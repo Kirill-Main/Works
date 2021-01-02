@@ -1,0 +1,61 @@
+<%= javascript_pack_tag 'send', 'data-turbolinks-track': 'reload' %>
+
+<h1><%= @product.name %></h1>
+<p style="font-size: 15pt;"><%= @product.main %></p>
+<p style="font-size: 15pt;">Пользователь <%= @seller.name %> продает этот товар за <%= @product.price %> рублей</p>
+
+<% if @user %>
+    <% unless @user["id"] == @seller.id %>
+        <table border="1" style="border-collapse: collapse;">
+            <caption><h2>Общение с продавцом</h2></caption>
+            <tr>
+                <td>По телефону <%= @seller.phone %></td>
+                <td>
+                    <textarea id="quesstion" style="width: 700px;"></textarea>
+                    <br>
+                    <button onclick="sendQuesstion(<%= @product.id %>)" id="btn">Написать письмо</button>   
+                </td>
+            </tr>
+        </table>
+        <p style="font-size: 15pt;" id="result"></p>
+        <table border="1" style="border-collapse: collapse;">
+            <caption><h2>Ваши разговоры</h2></caption>
+                <tr>
+                    <td>Вопрос</td>
+                    <td>Ответ</td>
+                </tr>
+                <% @user_conversations.each do |conversation| %>
+                    <tr>
+                        <td><%= conversation.quesstion %></td>
+                        <td><%= conversation.answer %></td>
+                    </tr>
+                <% end %>
+        </table>
+    <% else %>
+        <table border="1" style="border-collapse: collapse;">
+            <caption><h2>Общение с покупателями</h2></caption>
+            <tr>
+                <td>Покупатель</td>
+                <td>Вопрос</td>
+                <td>Ответ</td>
+            </tr>
+            <% @conversations.each do |conversation| %>
+                <tr>
+                <td><%= @users.find_by(id: conversation.user_id).name %></td>
+                <td><%= conversation.quesstion %></td>
+                    <% unless conversation.answer == "" %> 
+                        <td><%= conversation.answer %></td>
+                    <% else %>
+                        <td id="td№<%= conversation.id %>" width="100px">
+                            <textarea id="answer№<%= conversation.id %>" style="width: 500px;"></textarea>
+                            <br>
+                            <button onclick="sendAnswer(<%= conversation.id %>)">Написать письмо</button>
+                        </td>
+                    <% end %>
+                </tr>
+            <% end %>
+        </table>
+    <% end %>
+<% else %>
+    <p style="font-size: 15pt;"><a href="/login">Войдите</a>, чтобы написать или позвонить продавцу!</p>
+<% end %>

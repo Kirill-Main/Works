@@ -1,0 +1,38 @@
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">Регистрация</h1>
+</div>
+
+<%= form_tag("/create", :method => "post") do %>
+    <div class="container" style="width: 400px;">
+    <div class="form-group">
+        <%= label_tag "Введите email" %>
+        <%= text_field_tag :email, nil, class: "form-control", required: true, autofocus:true %>
+    </div>
+    <br>
+    <div class="form-group">
+        <%= label_tag "Введите имя" %>
+        <%= text_field_tag :name, nil, class: "form-control", required: true %>
+    </div>
+    <br>
+    <div class="form-group">
+        <%= label_tag "Введите пароль" %>
+        <%= password_field_tag :password, nil, class: "form-control", required: true %>
+    </div>
+    <br>
+    <div class="form-group">
+        <%= label_tag "Введите повторно пароль" %>
+        <%= password_field_tag :another_password, nil, class: "form-control", required: true %>
+    </div>
+    <br>
+    <%= submit_tag "Зарегистрироваться", class: "btn btn-primary" %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    или
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/login" class="btn btn-outline-primary">Войти</a>
+<% end %>
+
+<% if @error %>
+    <div class="alert alert-warning" style="top: 20px;">
+        <%= @error %>
+    </div>
+<% end %>

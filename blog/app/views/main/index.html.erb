@@ -1,0 +1,38 @@
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Добро пожаловать на наш сайт!</h1>
+    <p class="lead">
+        Здесь вы можете оставлять свои записи. Гляньте полный их список, доступный ниже.
+    </p>
+    <p class="lead">
+        <% if @user %>
+            <a href="/add">Нажмите,</a> чтобы добавить свою запись!
+        <% else %>
+            Хотите создать свою запись? Для этого <a href="/login">войдите</a> в свой аккаунт!
+        <% end %>
+    </p>
+</div>
+
+<% if @posts.length > 0 %>
+    <div class="text-center">
+        <h2>Все посты, доступные на нашем сайте</h2>
+    </div>
+    <% @posts.each do |user_id, _posts| %>
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <h6 class="border-bottom pb-2 mb-0">Пользователь: <%= @users.find_by(id: user_id).name %></h6>
+            <% _posts.sort_by {|post| -post.rating }.each do |post| %>
+                <div class="d-flex text-muted pt-3">
+                <p class="pb-3 mb-0 small lh-sm">
+                    <a href="/show/<%= post.id %>"><strong class="d-block text-gray-dark"><%= post.title %></strong></a>
+                    <%= post.summary %>
+                    <br>
+                    Рейтинг: <%= post.rating %>
+                </p>
+                </div>
+            <% end %>
+        </div>
+    <% end %>
+<% else %>
+    <div class="text-center">
+        <h2>Пока на сайте нет постов</h2>
+    </div>
+<% end %>

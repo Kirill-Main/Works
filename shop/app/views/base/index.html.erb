@@ -1,0 +1,12 @@
+<h1>Сайт покупок</h1>
+<p style="font-size: 15pt;">У нас уже есть товаров - <%= @products.length %>.</p>
+
+<br><br>
+
+<h2>Список доступных товаров</h2>
+<p style="font-size: 15pt;">Выберите конкретный товар.</p>
+<ul class="menu">
+    <% @products.each do |product| %>
+        <li><a href="/show/<%= product.id %>"><%= product.name %></a></li>&nbsp;
+    <% end %>
+</ul>

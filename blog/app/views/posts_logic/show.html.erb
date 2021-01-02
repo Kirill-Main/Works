@@ -1,0 +1,100 @@
+<script>
+    function addRating(post_id, button) {
+        let url = location.protocol + "//" + location.host + "/add_rating";
+        let param_str = "?post_id=" + post_id;
+        let http_request = new XMLHttpRequest();
+
+        http_request.open("GET", url + param_str);
+
+        http_request.onreadystatechange = function () {
+            let done = 4, ok = 200;
+            if (http_request.readyState == done && http_request.status == ok) {
+                data = JSON.parse(http_request.responseText);
+                let rating = document.getElementById("rating");
+                rating.innerText = "Рейтинг: " + data.rating;
+                button.setAttribute("disabled", "disabled");
+            }
+        };
+
+    http_request.send(null);
+    }
+
+    function addComment(post_id) {
+        let main = document.getElementById("main").value;
+        if (main == "") {
+            return;
+        }
+
+        let url = location.protocol + "//" + location.host + "/add_comment.json";
+        let param_str = "?main=" + main + "&post_id=" + post_id;
+        let http_request = new XMLHttpRequest();
+    
+        http_request.open("GET", url + param_str);
+
+        http_request.onreadystatechange = function () {
+            let done = 4, ok = 200;
+            if (http_request.readyState == done && http_request.status == ok) {
+                data = JSON.parse(http_request.responseText);
+                let div = document.getElementById("comments");
+
+                let new_div = document.createElement("div");
+                let span = document.createElement("span");
+                let p = document.createElement("p");
+                let hr = document.createElement("hr");
+
+                span.classList.add("font-weight-bold");
+                span.classList.add("lead");
+                span.innerText = data.name;
+                p.innerText = main;
+
+                new_div.appendChild(span);
+                new_div.appendChild(p);
+                new_div.appendChild(hr);
+                div.prepend(new_div)
+                document.getElementById("main").value = ""
+            }
+        };
+
+    http_request.send(null);
+    }
+</script>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4"><%= @post.title %></h1>
+    <p class="lead">
+        <%= @post.main %>
+    </p>
+    <p class="lead" id="rating">
+        Рейтинг: <%= @post.rating %>
+    </p>
+    <p class="lead">
+        <button class="btn btn-success" onclick="addRating(<%= @post.id %>, this)">Нравится</button>
+    </p>
+</div>
+
+<div class="col-md-12" style="margin-top: 20px;">
+
+        <% if @user %>
+            <%= form_tag do %>
+                <%= text_area_tag :main, nil, class: "form-control p-4", placeholder: "Оставьте комментарий" %>
+                <br>
+                <button type="button" class="btn btn-success" onclick="addComment(<%= @post.id %>)">Добавить</button>
+            <% end %>
+        <% else %>
+            <a href="/login" class="font-weight-bold lead">Войдите</a>
+            <small class="text-info lead">, чтобы оставить отзыв о этом товаре</small>
+        <% end %>
+
+        <h3 style="margin-top: 20px;">Комментарии</h3>
+        <hr>
+        <div id="comments">
+            <% @comments.each do |comment| %>
+                <div>
+                    <span class="font-weight-bold lead"><%= @users.find_by(id: comment.user_id).name %></span>
+                    <p><%= comment.main %></p>
+                    <hr>
+                </div>
+            <% end %>
+        </div>
+
+</div>

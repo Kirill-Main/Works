@@ -1,0 +1,29 @@
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">Добавление новой записи</h1>
+</div>
+
+<%= form_tag("/new", :method => "post") do %>
+    <div class="container" style="width: 400px;">
+    <div class="form-group">
+        <%= label_tag "Введите название поста" %>
+        <%= text_field_tag :title, nil, class: "form-control", required: true, autofocus:true %>
+    </div>
+    <br>
+    <div class="form-group">
+        <%= label_tag "Введите краткое описание" %>
+        <%= text_area_tag :summary, nil, class: "form-control", required: true %>
+    </div>
+    <br>
+    <div class="form-group">
+        <%= label_tag "Введите полное описание" %>
+        <%= text_area_tag :main, nil, class: "form-control", required: true %>
+    </div>
+    <br>
+    <%= submit_tag "Добавить", class: "btn btn-primary" %>
+<% end %>
+
+<% if @error %>
+    <div class="alert alert-warning" style="top: 20px;">
+        <%= @error %>
+    </div>
+<% end %>

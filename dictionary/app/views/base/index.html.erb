@@ -1,0 +1,76 @@
+<%= javascript_pack_tag 'logics', 'data-turbolinks-track': 'reload' %>
+<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" id="zero-result">
+  <p class="lead">
+    <a onclick="showAddForm()" class="text-primary">Нажмите</a>, чтобы добавить новый перевод.
+  </p>
+  <p class="lead" id=removeTitle>
+    <a onclick="removeAll()" class="text-danger">Нажмите</a>, чтобы удалить все переводы.
+  </p>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">№</th>
+            <th scope="col">Слово</th>
+            <th scope="col">Перевод</th>
+            <th scope="col">Изменить</th>
+            <th scope="col">Удалить</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <% @translations.each_with_index do |translation, i| %>
+            <tr id="<%= translation.id %>">
+              <td><%= i + 1 %></td>
+              <td id="str_from№<%= translation.id %>"><%= translation.str_from %></td>
+              <td id="str_to№<%= translation.id %>"><%= translation.str_to %></td>
+              <td><a onclick="change(<%= translation.id %>)" class="text-info">Изменить</a></td>
+              <td><a onclick="remove(<%= translation.id %>)" class="text-danger">Удалить</a></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<%= form_with url: "/add", method: "post", id: "addForm" do %>
+  <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Добавление</h1>
+  </div>
+  <div class="container" style="width: 400px;">
+    <div class="form-group">
+      <%= label_tag "Введите слово" %>
+      <%= text_field_tag :str_from, nil, class: "form-control", required: true, autofocus:true %>
+    </div>
+    <br>
+    <div class="form-group">
+      <%= label_tag "Введите перевод" %>
+      <%= text_field_tag :str_to, nil, class: "form-control", required: true %>
+    </div>
+    <br>
+    <%= submit_tag "Добавить", class: "btn btn-primary" %>
+    <%= button_tag "Закрыть", class: "btn btn-outline-secondary", type: "button", onclick: "hideAddForm()" %>
+  </div>
+<% end %>
+<%= form_with url: "/change", method: "post", id: "changeForm" do %>
+  <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Изменение</h1>
+  </div>
+  <div class="container" style="width: 400px;">
+    <div class="form-group">
+      <%= label_tag "Введите слово" %>
+      <%= text_field_tag :change_str_from, nil, class: "form-control", required: true, autofocus:true %>
+    </div>
+    <br>
+    <div class="form-group">
+      <%= label_tag "Введите перевод" %>
+      <%= text_field_tag :change_str_to, nil, class: "form-control", required: true %>
+    </div>
+    <br>
+    <%= text_field_tag :id_field, nil, class: "form-control", hidden: true %>
+    <%= submit_tag "Изменить", class: "btn btn-primary" %>
+    <%= button_tag "Закрыть", class: "btn btn-outline-secondary", type: "button", onclick: "hideChangeForm()" %>
+  </div>
+<% end %>

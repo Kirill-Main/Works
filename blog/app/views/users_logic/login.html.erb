@@ -1,0 +1,28 @@
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">Вход</h1>
+</div>
+
+<%= form_tag("/auth", :method => "post") do %>
+    <div class="container" style="width: 400px;">
+    <div class="form-group">
+        <%= label_tag "Введите email" %>
+        <%= text_field_tag :email, nil, class: "form-control", required: true, autofocus:true %>
+    </div>
+    <br>
+    <div class="form-group">
+        <%= label_tag "Введите пароль" %>
+        <%= password_field_tag :password, nil, class: "form-control", required: true %>
+    </div>
+    <br>
+    <%= submit_tag "Войти", class: "btn btn-primary" %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    или
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/register" class="btn btn-outline-primary">Зарегистрироваться</a>
+<% end %>
+
+<% if @error %>
+    <div class="alert alert-warning" style="top: 20px;">
+        <%= @error %>
+    </div>
+<% end %>

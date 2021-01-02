@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blog</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" 
+      rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+      
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <header>
+    <h6 style="margin-top: 10px;">
+      <% if @user %>
+        Вы вошли как <%= @user["name"] %>
+        <a href="/logout">Выйти</a>
+      <% else %>
+        Вы еще не вошли в свой аккаунт
+        <a href="/login">Войти</a>
+      <% end %>
+      <a class="text-right" href="/">Перейти на главную страницу</a>
+    </h6>
+  </header>
+  <body>
+    <%= yield %>
+  </body>
+</html>

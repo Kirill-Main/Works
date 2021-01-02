@@ -1,0 +1,33 @@
+<%= form_tag("/create", :method => "post") do %>
+    <table>
+    <caption><h1>Регистрация</h1></caption>
+        <tr>
+            <td>Введите имя</td>
+            <td><%= text_field_tag :name %></td>
+        </tr>
+        <tr>
+            <td>Введите телефон</td>
+            <td><%= text_field_tag :phone %></td>
+        </tr>
+            <tr>
+            <td>Введите email</td>
+            <td><%= email_field_tag :email %></td>
+        </tr>
+        <tr>
+            <td>Введите пароль</td>
+            <td><%= password_field_tag :password %></td>
+        </tr>
+        <tr>
+            <td>Повторите пароль</td>
+            <td><%= password_field_tag :another_password %></td>
+        </tr>
+        <tr>
+            <td><%= submit_tag "Зарегистрироваться" %></td>
+            <td><span style="color: red;"><%= @error %></span></td>
+        </tr>
+        <tr style="font-style: italic;">
+            <td><span style="font-size: medium;">Уже зарегистрированы?</span></td>
+            <td><a href="/login" style="font-size: medium;">Войти</a></td>
+        </tr>
+    </table>
+<% end %>

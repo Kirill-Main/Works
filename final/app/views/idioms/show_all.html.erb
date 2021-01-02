@@ -1,0 +1,36 @@
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">Список всех идиом</h1>
+</div>
+
+<% if @idioms.length > 0%>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Номер строки</th>
+            <th scope="col">Идиома (на русском)</th>
+            <th scope="col">Перевод идиомы (на англйиском)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @idioms.each_with_index do |idiom, i| %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= idiom.str_from %></td>
+              <td><%= idiom.str_to %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<% else %>
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <p class="lead">
+    Пока у вас нет добавленных идиом!
+  </p>
+</div>
+<% end %>
